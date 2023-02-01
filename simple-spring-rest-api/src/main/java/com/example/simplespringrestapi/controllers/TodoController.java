@@ -18,7 +18,9 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
 @RestController
+@RequestMapping(path = TodoController.BASE_URL)
 public class TodoController {
+  public static final String BASE_URL = "/api/v1/todos";
 
   // すべてのtodoをためておくリスト
   private final ArrayList<TodoItem> _todoItems = new ArrayList<>() {
@@ -44,21 +46,21 @@ public class TodoController {
   }
 
   // get todos
-  @RequestMapping(method = RequestMethod.GET, path = "/todos")
+  @RequestMapping(method = RequestMethod.GET, path = "")
   public ArrayList<TodoItem> getTodoItems() {
 
     return _todoItems;
   }
 
   // get todo
-  @RequestMapping(method = RequestMethod.GET, path = "/todos/{id}")
+  @RequestMapping(method = RequestMethod.GET, path = "/{id}")
   public TodoItem getTodoItem(@PathVariable int id) {
     TodoItem found = getTodoItemById(id);
     return found;
   }
 
   // create todo
-  @RequestMapping(method = RequestMethod.POST, path = "/todos")
+  @RequestMapping(method = RequestMethod.POST, path = "")
   public TodoItem createTodoItems(@RequestBody TodoItem todoItem) {
     todoItem.setId(4);
     _todoItems.add(todoItem);
@@ -66,7 +68,7 @@ public class TodoController {
   }
 
   // update todo
-  @RequestMapping(method = RequestMethod.PUT, path = "/todos/{id}")
+  @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
   public TodoItem putTodoItems(@PathVariable int id, @RequestBody TodoItem todoItem) {
     TodoItem found = getTodoItemById(id);
 
@@ -77,7 +79,7 @@ public class TodoController {
   }
 
   // delete todo
-  @RequestMapping(method = RequestMethod.DELETE, path = "/todos/{id}")
+  @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
   public String deleteTodoItems(@PathVariable int id) {
     TodoItem found = getTodoItemById(id);
 
