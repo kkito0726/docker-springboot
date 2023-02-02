@@ -17,7 +17,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.simplespringrestapi.models.TodoItem;
 import com.example.simplespringrestapi.services.TodoService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -44,19 +46,11 @@ public class TodoController {
 
   // create todo
   @PostMapping(path = "")
-  public ResponseEntity<TodoItem> createTodoItem(@RequestBody TodoItem newTodoItem) {
+  public ResponseEntity<TodoItem> createTodoItem(@Valid @RequestBody TodoItem newTodoItem) {
       TodoItem savedTodoItem = _todoService.saveTodoItem(newTodoItem);
       
       URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedTodoItem.getId()).toUri();
       return ResponseEntity.created(location).body(savedTodoItem);
-  }
-
-  @PostMapping(path = "/test")
-  public TodoItem createTestTodoItems(@RequestBody TodoItem newTodoItem) {
-    System.out.println(newTodoItem.getTitle());
-    
-    
-    return newTodoItem;
   }
 
   // update todo
