@@ -1,31 +1,17 @@
 package com.example.simplespringrestapi.models;
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TodoItem {
   private int id;
+  
+  @NotBlank(message = "Title must not be blank.")
   private String title;
-
-  public TodoItem() {
-  }
-
-  public TodoItem(int id, String title) {
-    this.id = id;
-    this.title = title;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
 }
 
