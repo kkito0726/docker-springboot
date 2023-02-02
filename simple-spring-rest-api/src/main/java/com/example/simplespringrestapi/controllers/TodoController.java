@@ -44,12 +44,19 @@ public class TodoController {
 
   // create todo
   @PostMapping(path = "")
-  public ResponseEntity<TodoItem> createTodoItems(@RequestBody TodoItem newTodoItem) {
-    TodoItem savedTodoItem = _todoService.saveTodoItem(newTodoItem);
+  public ResponseEntity<TodoItem> createTodoItem(@RequestBody TodoItem newTodoItem) {
+      TodoItem savedTodoItem = _todoService.saveTodoItem(newTodoItem);
+      
+      URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedTodoItem.getId()).toUri();
+      return ResponseEntity.created(location).body(savedTodoItem);
+  }
+
+  @PostMapping(path = "/test")
+  public TodoItem createTestTodoItems(@RequestBody TodoItem newTodoItem) {
+    System.out.println(newTodoItem.getTitle());
     
-    URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedTodoItem.getId()).toUri();
     
-    return ResponseEntity.created(location).body(newTodoItem);
+    return newTodoItem;
   }
 
   // update todo
