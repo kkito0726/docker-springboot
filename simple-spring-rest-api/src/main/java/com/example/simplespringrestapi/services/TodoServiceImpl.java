@@ -5,9 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.simplespringrestapi.errors.BadRequestException;
 import com.example.simplespringrestapi.errors.NotFoundException;

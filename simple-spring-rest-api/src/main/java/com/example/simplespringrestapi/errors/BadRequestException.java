@@ -1,6 +1,5 @@
 package com.example.simplespringrestapi.errors;
 
-import java.net.http.HttpRequest;
 
 import org.springframework.http.HttpStatus;
 
