@@ -1,15 +1,14 @@
 package com.example.simplespringrestapi.errors;
 
-import org.springframework.http.HttpStatus;
-
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public class HttpException extends RuntimeException {
+
   private HttpStatus httpStatus;
 
-  public HttpException() {
-  }
+  public HttpException() {}
 
   public HttpException(String message, HttpStatus httpStatus) {
     super(message);
@@ -26,7 +25,13 @@ public class HttpException extends RuntimeException {
     this.httpStatus = httpStatus;
   }
 
-  public HttpException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, HttpStatus httpStatus) {
+  public HttpException(
+    String message,
+    Throwable cause,
+    boolean enableSuppression,
+    boolean writableStackTrace,
+    HttpStatus httpStatus
+  ) {
     super(message, cause, enableSuppression, writableStackTrace);
     this.httpStatus = httpStatus;
   }

@@ -1,18 +1,17 @@
 package com.example.simplespringrestapi.services;
 
+import com.example.simplespringrestapi.errors.BadRequestException;
+import com.example.simplespringrestapi.errors.NotFoundException;
+import com.example.simplespringrestapi.models.TodoItem;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.springframework.stereotype.Service;
 
-import com.example.simplespringrestapi.errors.BadRequestException;
-import com.example.simplespringrestapi.errors.NotFoundException;
-import com.example.simplespringrestapi.models.TodoItem;
-
 @Service
-public class TodoServiceImpl implements TodoService{
+public class TodoServiceImpl implements TodoService {
+
   private final AtomicInteger _counter = new AtomicInteger();
 
   // すべてのtodoをためておくリスト
@@ -23,6 +22,7 @@ public class TodoServiceImpl implements TodoService{
       add(new TodoItem(_counter.incrementAndGet(), "todo 3"));
     }
   };
+
   @Override
   public TodoItem saveTodoItem(TodoItem todoItem) {
     if (Objects.isNull(todoItem.getTitle())) {
@@ -56,11 +56,13 @@ public class TodoServiceImpl implements TodoService{
   public void deleteTodoItems(int id) {
     TodoItem found = _findTodoItemById(id);
     _todoItems.remove(found);
-    
   }
 
   private TodoItem _findTodoItemById(int id) {
-    Optional<TodoItem> found =  _todoItems.stream().filter(item -> item.getId() == id).findAny();
+    Optional<TodoItem> found = _todoItems
+      .stream()
+      .filter(item -> item.getId() == id)
+      .findAny();
 
     if (!found.isPresent()) {
       throw new NotFoundException("Todo item is not available");
@@ -68,5 +70,4 @@ public class TodoServiceImpl implements TodoService{
 
     return found.get();
   }
-  
 }

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TodoItem {
+
   private int id;
-  
+
   @NotBlank(message = "Title must not be blank.")
   private String title;
 }
-
