@@ -4,7 +4,7 @@ import com.example.simplespringrestapi.models.TodoItem;
 import com.example.simplespringrestapi.services.TodoService;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +28,8 @@ public class TodoController {
 
   // get todos
   @GetMapping(path = "")
-  public ResponseEntity<ArrayList<TodoItem>> getTodoItems() {
-    ArrayList<TodoItem> todoItems = _todoService.getTodoItems();
+  public ResponseEntity<List<TodoItem>> getTodoItems() {
+    List<TodoItem> todoItems = _todoService.getTodoItems();
     return ResponseEntity.ok(todoItems);
   }
 

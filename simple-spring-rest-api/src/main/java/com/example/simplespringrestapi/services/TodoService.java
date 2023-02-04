@@ -1,12 +1,12 @@
 package com.example.simplespringrestapi.services;
 
 import com.example.simplespringrestapi.models.TodoItem;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TodoService {
   public TodoItem saveTodoItem(TodoItem todoItem);
 
-  public ArrayList<TodoItem> getTodoItems();
+  public List<TodoItem> getTodoItems();
 
   public TodoItem getTodoItemById(int id);
 

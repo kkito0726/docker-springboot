@@ -1,41 +1,24 @@
 package com.example.simplespringrestapi.services;
 
-import com.example.simplespringrestapi.errors.BadRequestException;
 import com.example.simplespringrestapi.errors.NotFoundException;
 import com.example.simplespringrestapi.models.TodoItem;
-import java.util.ArrayList;
-import java.util.Objects;
+import com.example.simplespringrestapi.repository.TodoRepository;
+import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
+@Primary
 public class TodoServiceImpl implements TodoService {
 
-  private final AtomicInteger _counter = new AtomicInteger();
-
-  // すべてのtodoをためておくリスト
-  private final ArrayList<TodoItem> _todoItems = new ArrayList<>() {
-    {
-      add(new TodoItem(_counter.incrementAndGet(), "todo 1"));
-      add(new TodoItem(_counter.incrementAndGet(), "todo 2"));
-      add(new TodoItem(_counter.incrementAndGet(), "todo 3"));
-    }
-  };
+  @Autowired(required = true)
+  public TodoRepository _todoRepository;
 
   @Override
-  public TodoItem saveTodoItem(TodoItem todoItem) {
-    if (Objects.isNull(todoItem.getTitle())) {
-      throw new BadRequestException("Title must not be null");
-    }
-    todoItem.setId(_counter.incrementAndGet());
-    _todoItems.add(todoItem);
-    return todoItem;
-  }
-
-  @Override
-  public ArrayList<TodoItem> getTodoItems() {
-    return this._todoItems;
+  public void deleteTodoItems(int id) {
+    _todoRepository.deleteById(id);
   }
 
   @Override
@@ -44,25 +27,22 @@ public class TodoServiceImpl implements TodoService {
   }
 
   @Override
-  public TodoItem updateTodoItem(TodoItem todoItem, int id) {
-    TodoItem found = _findTodoItemById(id);
-    _todoItems.remove(found);
-    _todoItems.add(todoItem);
-
-    return todoItem;
+  public List<TodoItem> getTodoItems() {
+    return _todoRepository.findAll();
   }
 
   @Override
-  public void deleteTodoItems(int id) {
-    TodoItem found = _findTodoItemById(id);
-    _todoItems.remove(found);
+  public TodoItem saveTodoItem(TodoItem todoItem) {
+    return _todoRepository.save(todoItem);
+  }
+
+  @Override
+  public TodoItem updateTodoItem(TodoItem todoItem, int id) {
+    return _todoRepository.save(todoItem);
   }
 
   private TodoItem _findTodoItemById(int id) {
-    Optional<TodoItem> found = _todoItems
-      .stream()
-      .filter(item -> item.getId() == id)
-      .findAny();
+    Optional<TodoItem> found = _todoRepository.findById(id);
 
     if (!found.isPresent()) {
       throw new NotFoundException("Todo item is not available");
